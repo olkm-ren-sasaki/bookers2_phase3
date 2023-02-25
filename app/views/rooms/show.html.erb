@@ -1,0 +1,15 @@
+<h1><%= @user.name %> さんとのチャット</h1>
+<% @messages.each do |message| %>
+  <% if message.user_id == current_user.id %>
+    <p class="text-primary">
+      <%= message.body %>
+    </p>
+  <% else %>
+    <p class="text-success">
+      <%= message.body %>
+    </p>
+  <% end %>
+<% end %>
+<%= form_with model: [@room, @message] do |f|%>
+  <%= f.text_field :body %>
+<% end %>

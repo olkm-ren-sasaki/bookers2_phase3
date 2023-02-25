@@ -1,0 +1,13 @@
+<% if current_user.following?(user) & user.following?(current_user) %>
+  <% if !room_id.nil? %>
+    <%= link_to "chatを始めよう", room_path(room_id) %>
+  <% else %>
+      <%= link_to "chatを始めよう", rooms_path(user_id: user.id), method: :post %>
+  <% end %>
+  <%#= form_with model: room do |f|%>
+    <%#= f.fields_for :entry do |entry| %>
+      <%#= f.hidden_field user.id %>
+    <%# end %>
+    <%#= f.submit "chatを始めよう" %>
+  <%# end %>
+<% end %>

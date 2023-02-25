@@ -6,6 +6,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+
+    # DM機能
+    @room_id = nil
+    unless @user == current_user
+      @room_id = current_user.get_room_id(@user)
+    end
   end
 
   def index

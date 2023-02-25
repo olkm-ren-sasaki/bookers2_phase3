@@ -10,7 +10,7 @@
   User.create!(
     email: "sample#{n + 1}@sample",
     name: "sample#{n + 1}",
-    password: "sample#{n + 1}"
+    password: "asdfasdf"
   )
   Book.create!(
     user_id: "#{n + 1}",
@@ -18,6 +18,29 @@
     body: "sample#{n + 1}"
   )
 end
+
+20.times do |n|
+  user_id = rand(1..5)
+  book_id = rand(1..5)
+  unless Favorite.find_by(user_id: user_id, book_id: book_id)
+    Favorite.create!(
+      user_id: user_id,
+      book_id: book_id
+    )
+  end
+end
+
+10.times do |n|
+  follower_id = rand(1..5)
+  followed_id = rand(1..5)
+  if Relationship.find_by(follower_id: follower_id, followed_id: followed_id).nil? && follower_id != followed_id
+    Relationship.create!(
+      follower_id: follower_id,
+      followed_id: followed_id
+    )
+  end
+end
+
 
 
 

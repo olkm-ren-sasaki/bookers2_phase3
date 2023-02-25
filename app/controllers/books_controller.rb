@@ -4,12 +4,21 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    @book_comment = BookComment.new
+    @book_comment = BookComment.new 
+    # DM機能
+    @user = @book.user
+    unless @user == current_user
+      @room_id = current_user.get_room_id(@user)
+    end
+    # 閲覧機能
+    @book.view_counts.create(user_id: current_user.id)
+    @view_counts = @book.view_counts.count
   end
 
   def index
     @books = Book.includes(:favorites).sort_by{|book| -book.favorites.size}
     @book = Book.new
+    
   end
 
   def create

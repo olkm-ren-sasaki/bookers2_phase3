@@ -1,0 +1,101 @@
+<h3>投稿数の前日比・前週比</h3>
+<table class="table table-bordered">
+  <thead>
+    <th>
+      今日の投稿数
+    </th>
+    <th>
+      前日の投稿数
+    </th>
+    <th>
+      前日比
+    </th>
+  </thead>
+  <tbody>
+    <td>
+    <%= submit_today %>
+    </td>
+    <td>
+    <%= submit_yesterday %>
+    </td>
+    <td>
+    <%= submit_yesterday != 0 ? "#{((submit_today / submit_yesterday.to_f)*100).round}%" : "#N/A" %>
+    </td>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <thead>
+    <th>
+      今週の投稿数
+    </th>
+    <th>
+      先週の投稿数
+    </th>
+    <th>
+      前週比
+    </th>
+  </thead>
+  <tbody>
+    <td>
+    <%= submit_this_week %>
+    </td>
+    <td>
+    <%= submit_last_week %>
+    </td>
+    <td>
+    <%= submit_last_week != 0 ? "#{((submit_this_week / submit_last_week.to_f)*100).round}%" : "#N/A" %>
+    </td>
+  </tbody>
+</table>
+<h3>7日分の投稿数</h3>
+<table class="table table-bordered">
+  <tr>
+    <% 7.times.sort.reverse.each do |day|%>
+      <th><%= day == 0 ? "今日" : "#{day}日前" %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% 7.times.sort.reverse.each do |day|%>
+      <td><%= books_each_days[day].count %></td>
+    <% end %>
+  </tr>
+</table>
+<div id="books_each_days" data-books_each_days="<%= @books_each_days.to_json %>"></div>
+<canvas id="myChart"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    const books_each_days = $('#books_each_days').data('books_each_days'); 
+    const ctx = document.getElementById('myChart');
+    const labels = Object.keys(books_each_days).reverse().map((day) => day == 0 ? "今日" : `${day}日前`) 
+    const data = Object.values(books_each_days).reverse().map((books) => books.length)
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '投稿した本の数',
+            borderColor: 'rgb(0, 0, 255)',
+            data: data
+          }]
+        },
+        options: {
+          
+          scales: {
+            yAxes: [{
+
+              ticks : {
+                min: 0,
+                max: 10
+              }
+            }
+            ]
+          },
+          title: {
+            display: true,
+            text: "7日間の投稿数比較"
+          }
+        }
+    });
+  }, false)
+</script>

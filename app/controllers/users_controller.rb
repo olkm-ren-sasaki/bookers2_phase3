@@ -6,6 +6,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+    @submit_today = @user.submit_today.count
+    @submit_yesterday = @user.submit_yesterday.count
+    @submit_this_week = @user.submit_this_week.count
+    @submit_last_week = @user.submit_last_week.count
+    @submit_seven_days = @user.submit_seven_days
+    @books_each_days = @user.submit_seven_days
+    @search_book = nil
   end
 
   def index
@@ -22,6 +29,10 @@ class UsersController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def chart
+    return session[:submit_seven_days]
   end
 
   private

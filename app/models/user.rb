@@ -38,5 +38,33 @@ class User < ApplicationRecord
     end
       profile_image.variant(resize_to_fill: [weight,height]).processed
   end
+
+  ## 記録
+   def submit_today
+    books.where(created_at: Time.zone.now.all_day)
+  end
+
+  def submit_yesterday
+    books.where(created_at: Time.zone.yesterday.all_day)
+  end
+
+  def submit_this_week
+    books.where(created_at: Time.current.beginning_of_week(start_day= :saturday)..Time.current.end_of_week(end_day= :saturday))
+  end
+
+  def submit_last_week
+    books.where(created_at: Time.current.weeks_ago(1).beginning_of_week(start_day= :saturday)..Time.current.weeks_ago(1).end_of_week(end_day= :saturday))
+  end
+
+  def submit_seven_days
+    books_each_day = {}
+    7.times do |day|
+      books_each_day[day] = self.books.where(created_at: Time.current.days_ago(day).all_day)
+    end
+    return books_each_day
+  end
+
+
+
 end
 

@@ -9,6 +9,22 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
+     
+      <%= render "record", 
+          submit_today: @submit_today,
+          submit_yesterday: @submit_yesterday,
+          submit_this_week: @submit_this_week,
+          submit_last_week: @submit_last_week,
+          submit_seven_days: @submit_seven_days,
+          books_each_days: @books_each_days
+      %>
+      <%= form_with url: search_path, local: false  do |f| %>
+          <%= f.date_field :create_at  %>
+          <%= f.submit "検索" %>
+      <% end %>
+      <div id="user-submit-count">
+        <%= render "users/search", search_book: @search_book %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'groups/index'
+  get 'groups/new'
+  get 'groups/edit'
+  get 'groups/show'
   devise_for :users
 
   root :to =>"homes#top"
@@ -15,4 +19,7 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get '/search', to: 'searches#search'
+
+  # create group
+  resources :groups, only: [:index, :show, :edit, :update, :new, :create]
 end

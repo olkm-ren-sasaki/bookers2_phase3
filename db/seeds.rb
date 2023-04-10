@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 USER_AMOUT = 5
 BOOK_AMOUT = 20
+GROUP_AMOUT = 10
 
 USER_AMOUT.times do |n|
   User.create!(
@@ -47,4 +48,13 @@ end
       followed_id: followed_id
     )
   end
+  
+end
+(USER_AMOUT).times do |n|
+  owner_id = User.pluck(:id).sample
+  Group.create!(
+    name: "sample#{owner_id}",
+    introduction: "sample#{owner_id}",
+    owner_id: owner_id
+  )
 end

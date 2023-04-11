@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  get 'groups/index'
-  get 'groups/new'
-  get 'groups/edit'
-  get 'groups/show'
+
   devise_for :users
 
   root :to =>"homes#top"
@@ -21,5 +18,8 @@ Rails.application.routes.draw do
   get '/search', to: 'searches#search'
 
   # create group
-  resources :groups, only: [:index, :show, :edit, :update, :new, :create]
+  resources :groups, only: [:index, :show, :edit, :update, :new, :create] 
+  resources :group_users, only: [:create, :destroy]
+  resources :events, only: [:new, :create]
+  get "events/comfirm/:id", to: "events#comfirm", as: "event_comfirm"
 end

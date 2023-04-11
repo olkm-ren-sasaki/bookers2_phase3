@@ -1,6 +1,6 @@
-class CreateGropuUsers < ActiveRecord::Migration[6.1]
+class CreateGroupUsers < ActiveRecord::Migration[6.1]
   def change
-    create_table :gropu_users do |t|
+    create_table :group_users do |t|
       t.references :user, null: false, foreign_key: true
       t.references :group, null: false, foreign_key: true
 

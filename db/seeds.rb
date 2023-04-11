@@ -52,9 +52,21 @@ end
 end
 (USER_AMOUT).times do |n|
   owner_id = User.pluck(:id).sample
+  introduction = ["楽しいよ", "面白いよ", "仲良いよ", "ワクワクするよ", "勉強しよう"].sample
   Group.create!(
     name: "sample#{owner_id}",
-    introduction: "sample#{owner_id}",
+    introduction: introduction,
     owner_id: owner_id
   )
+end
+
+(USER_AMOUT*2).times do |n|
+  group_id = Group.pluck(:id).sample
+  user_id = User.pluck(:id).sample
+  if GroupUser.find_by(group_id: group_id, user_id: user_id).nil?
+    GroupUser.create!(
+      group_id: group_id,
+      user_id: user_id
+    )
+  end
 end

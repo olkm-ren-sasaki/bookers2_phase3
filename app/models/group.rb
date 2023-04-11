@@ -1,6 +1,8 @@
 class Group < ApplicationRecord
     validates :name, presence: true
     validates :introduction, presence: true
+    has_many :group_users
+    has_many :event
     has_one_attached :image
     def get_image(weight, height)
         unless self.image.attached?

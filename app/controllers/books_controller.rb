@@ -8,8 +8,15 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
     @book = Book.new
+    if params[:latest]
+     @books = Book.latest
+    elsif params[:star_count]
+     @books = Book.rate_desc
+    else
+     @books = Book.rate_desc
+    end
+
   end
 
   def create
@@ -39,10 +46,11 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :rate, :tag)
   end
 
   def ensure_correct_user

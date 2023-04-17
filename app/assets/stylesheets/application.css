@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+ .search_form {
+   margin-left: 20%;
+   display: flex;
+ }
+
+.tag_search_form {
+   margin-left: 50px;
+}

@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all
     @book = Book.new
-
+    
   end
 
   def new
@@ -23,6 +23,10 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.owner_id = current_user.id
     if @group.save
+      @group_user = GroupUser.new
+      @group_user.group_id = @group.id
+      @group_user.user_id = current_user.id
+      @group_user.save
       redirect_to groups_path
     else
       render :new

@@ -53,10 +53,14 @@ end
 (USER_AMOUT).times do |n|
   owner_id = User.pluck(:id).sample
   introduction = ["楽しいよ", "面白いよ", "仲良いよ", "ワクワクするよ", "勉強しよう"].sample
-  Group.create!(
+  group = Group.create!(
     name: "sample#{owner_id}",
     introduction: introduction,
     owner_id: owner_id
+  )
+  GroupUser.create!(
+    user_id: owner_id,
+    group_id: group.id
   )
 end
 

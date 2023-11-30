@@ -1,13 +1,16 @@
 <div id="rate-<%= book.id%>"></div>
 <script>
-    $('#rate-<%= book.id %>').empty();
-    $('#rate-<%= book.id%>').raty({
+    eval("var elem_" + <%= book.id %> + " = document.querySelector('#rate-<%= book.id %>');" );
+
+    eval("var opt_" + <%= book.id %> +  `= {
         size      : 36,
         starOff   : '<%= asset_path('star-off.png') %>',
         starOn    : '<%= asset_path('star-on.png') %>',
         starHalf  : '<%= asset_path('star-half.png') %>',
         half      : true,
         readOnly: true,
-        score: <%= book.rate %>,
-    });
+        score: <%= book.rate %>
+    };`);
+    raty(eval("elem_" + <%= book.id %>), eval("opt_" + <%= book.id %>))
+
 </script>
